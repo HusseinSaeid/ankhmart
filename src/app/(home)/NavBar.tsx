@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { NavBarSideBar } from "./NavBar-SideBar";
 import { BiMenu } from "react-icons/bi";
+import { FaAnkh } from "react-icons/fa6";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -47,12 +48,18 @@ const NavBarItem = ({ children, href, isactive }: NavBarItemProps) => {
 
 export const NavBar = () => {
   const pathname = usePathname();
-  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   return (
     <nav className=" h-20 flex border-b justify-between bg-white font-medium ">
       <Link href="/" className="pl-6 flex items-center">
-        <span className={cn("text-5xl font-semibold", poppins.className)}>
-          Logo
+        <span
+          className={cn(
+            "text-5xl font-semibold flex flex-row",
+            poppins.className
+          )}
+        >
+          <FaAnkh />
+          Mart
         </span>
       </Link>
       <NavBarSideBar
