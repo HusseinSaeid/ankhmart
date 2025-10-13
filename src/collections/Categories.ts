@@ -9,7 +9,7 @@ export const Categories: CollectionConfig = {
       required: true,
     },
     { name: "slug", type: "text", required: true, unique: true, index: true },
-    { name: "color", type: "text" },
+    { name: "color", type: "text", required: true },
     {
       name: "parent",
       type: "relationship",
