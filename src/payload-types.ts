@@ -170,8 +170,9 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
-  color: string;
+  color?: string | null;
   parent?: (string | null) | Category;
+  order?: number | null;
   subcategories?: {
     docs?: (string | Category)[];
     hasNextPage?: boolean;
@@ -290,6 +291,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   color?: T;
   parent?: T;
+  order?: T;
   subcategories?: T;
   updatedAt?: T;
   createdAt?: T;

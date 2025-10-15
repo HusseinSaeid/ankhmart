@@ -1,23 +1,112 @@
-import { Category } from "@/payload-types";
+"use client";
+import { useRef, useState, useEffect } from "react";
 import { CategoryDropdown } from "./CategoryDropdown";
+import { CustomCategory } from "../typs";
+import { Button } from "@/components/ui/button";
+import { CategoriesSideBar } from "./CategoriesSideBar";
+import { cn } from "@/lib/utils";
+import { VscListFilter } from "react-icons/vsc";
 
 interface Props {
-  data: any;
+  data: CustomCategory[];
 }
 
 export const Categories = ({ data }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
+  const viewAllRef = useRef<HTMLDivElement>(null);
+
+  const [visibleCount, setIsVisibleCount] = useState(data.length);
+  const [isAnyHovered, setIsAnyHovered] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+
+  const activeCategore = "all";
+
+  const activeCategoreIndex = data.findIndex(
+    (cat) => cat.slug === activeCategore
+  );
+  const isActiveCategoreHidden =
+    activeCategoreIndex >= visibleCount && activeCategoreIndex !== -1;
+
+  useEffect(() => {
+    const calculateVisible = () => {
+      if (!containerRef.current || !measureRef.current || !viewAllRef.current)
+        return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const viewAllWidth = viewAllRef.current?.offsetWidth;
+      const availableWidth = containerWidth - viewAllWidth;
+
+      const items = Array.from(measureRef.current.children);
+      let totalWidth = 0;
+      let visible = 0;
+
+      for (const item of items) {
+        const width = item.getBoundingClientRect().width;
+        if (totalWidth + width > availableWidth) break;
+        totalWidth += width;
+        visible++;
+      }
+      setIsVisibleCount(visible);
+    };
+    const resizeObserver = new ResizeObserver(calculateVisible);
+    resizeObserver.observe(containerRef.current!);
+    return () => resizeObserver.disconnect();
+  }, [data.length]);
+
   return (
     <div className="relative w-full">
-      <div className="flex flex-nowrap items-center">
-        {data.map((category: Category) => (
+      <CategoriesSideBar
+        data={data}
+        open={isSideBarOpen}
+        onOpenChange={setIsSideBarOpen}
+      />
+      {/* hidden */}
+      <div
+        ref={measureRef}
+        className="absolute opacity-0 pointer-events-none flex"
+        style={{ position: "fixed", top: -9999, left: -9999 }}
+      >
+        {data.map((category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}
-              isActive={false}
+              isActive={activeCategore === category.slug}
               isNavigationHovered={false}
             />
           </div>
         ))}
+      </div>
+      {/* visible */}
+      <div
+        ref={containerRef}
+        onMouseEnter={() => setIsAnyHovered(true)}
+        onMouseLeave={() => setIsAnyHovered(false)}
+        className="flex flex-nowrap items-center"
+      >
+        {data.slice(0, visibleCount).map((category) => (
+          <div key={category.id}>
+            <CategoryDropdown
+              category={category}
+              isActive={activeCategore === category.slug}
+              isNavigationHovered={false}
+            />
+          </div>
+        ))}
+        <div ref={viewAllRef} className=" shrink-0  ">
+          <Button
+            variant={"elevated"}
+            className={cn(
+              "h-11 px-4 bg-transparent border-transparent  hover:bg-white hover:border-primary text-black",
+              isActiveCategoreHidden &&
+                !isAnyHovered &&
+                "bg-white border-primary "
+            )}
+            onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+          >
+            View All Categories <VscListFilter className="ml-1" />
+          </Button>
+        </div>
       </div>
     </div>
   );

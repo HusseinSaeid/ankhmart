@@ -9,7 +9,7 @@ export const useDropDownPosition = (
     const dropDownWidth = 240;
 
     let left = ract.left + window.scrollX;
-    let top = ract.bottom + window.scrollY;
+    const top = ract.bottom + window.scrollY;
 
     if (left + dropDownWidth > window.innerWidth) {
       left = ract.right + window.scrollX - dropDownWidth;
