@@ -1,17 +1,17 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import { CategoryDropdown } from "./CategoryDropdown";
-import { CustomCategory } from "../typs";
 import { Button } from "@/components/ui/button";
 import { CategoriesSideBar } from "./CategoriesSideBar";
 import { cn } from "@/lib/utils";
 import { VscListFilter } from "react-icons/vsc";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-interface Props {
-  data: CustomCategory[];
-}
+export const Categories = () => {
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
-export const Categories = ({ data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -56,11 +56,7 @@ export const Categories = ({ data }: Props) => {
 
   return (
     <div className="relative w-full">
-      <CategoriesSideBar
-        data={data}
-        open={isSideBarOpen}
-        onOpenChange={setIsSideBarOpen}
-      />
+      <CategoriesSideBar open={isSideBarOpen} onOpenChange={setIsSideBarOpen} />
       {/* hidden */}
       <div
         ref={measureRef}
