@@ -26,4 +26,3 @@ export default async function Layout({ children }: Props) {
     </div>
   );
 }
-export { SearchFilters, SearchFiltersIsLoading };
