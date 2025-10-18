@@ -46,6 +46,7 @@ export const NavBarSideBar = ({ items, open, onOpenChange }: Props) => {
           ))}
           <div className="border-t">
             <Link
+              prefetch
               onClick={() => onOpenChange(false)}
               href={"/sign-in"}
               className="w-full hover:bg-[#4CAF50] text-left flex items-center text-base font-medium p-4 transition-colors"
@@ -53,6 +54,7 @@ export const NavBarSideBar = ({ items, open, onOpenChange }: Props) => {
               Sign in
             </Link>
             <Link
+              prefetch
               href={"/sign-up"}
               onClick={() => onOpenChange(false)}
               className="w-full hover:bg-[#4CAF50] text-left flex items-center text-base font-medium p-4 transition-colors"

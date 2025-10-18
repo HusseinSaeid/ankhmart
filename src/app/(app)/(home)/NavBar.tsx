@@ -83,18 +83,22 @@ export const NavBar = () => {
           asChild
           variant="secondary"
           className={cn(
-            "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-white hover:bg-[#4CAF50] transition-colors text-lg"
+            "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-white hover:bg-[#D4AF37] transition-colors text-lg"
           )}
         >
-          <Link href="/sign-in">Sign In</Link>
+          <Link prefetch href="/sign-in">
+            Sign In
+          </Link>
         </Button>
         <Button
           asChild
           className={cn(
-            "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-[#4CAF50] transition-colors text-lg hover:text-black"
+            "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-[#D4AF37] transition-colors text-lg hover:text-black"
           )}
         >
-          <Link href="/sign-up">Start Selling</Link>
+          <Link prefetch href="/sign-up">
+            Start Selling
+          </Link>
         </Button>
       </div>
       <div className="lg:hidden flex items-center justify-center">
