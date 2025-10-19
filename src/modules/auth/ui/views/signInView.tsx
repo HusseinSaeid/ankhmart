@@ -15,7 +15,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormDescription,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
@@ -27,7 +26,7 @@ import { Poppins } from "next/font/google";
 import { FaAnkh } from "react-icons/fa6";
 
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
@@ -38,6 +37,8 @@ const poppins = Poppins({
 
 export const SignInView = () => {
   const router = useRouter();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -50,13 +51,13 @@ export const SignInView = () => {
     login.mutate(values);
   };
 
-  const trpc = useTRPC();
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => {
         toast.error(error.message);
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     })

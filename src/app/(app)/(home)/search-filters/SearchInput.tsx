@@ -1,10 +1,15 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+
 import { CategoriesSideBar } from "./CategoriesSideBar";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { VscListFilter } from "react-icons/vsc";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 interface Props {
   disabled?: boolean;
@@ -12,6 +17,8 @@ interface Props {
 
 export const SearchInput = ({ disabled }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
 
   return (
     <div className="flex items-center w-full gap-2">
@@ -24,7 +31,7 @@ export const SearchInput = ({ disabled }: Props) => {
         />
         <FaSearch className="absolute left-3 top-1/2 size-4 transform -translate-y-1/2 text-neutral-500" />
       </div>
-      <div>
+      <div className="flex items-center gap-2">
         <Button
           variant={"elevated"}
           className="shrink-0 flex lg:hidden size-12"
@@ -34,6 +41,29 @@ export const SearchInput = ({ disabled }: Props) => {
         >
           <VscListFilter />
         </Button>
+        {session.data?.user && (
+          <div>
+            <Button
+              className="hidden lg:flex"
+              variant="elevated"
+              size={"lg"}
+              asChild
+            >
+              <Link href={"/library"}>
+                <BsBookmarkCheckFill />
+                Library
+              </Link>
+            </Button>
+            <Button
+              variant={"elevated"}
+              className="shrink-0 flex lg:hidden size-12"
+            >
+              <Link href={"/library"}>
+                <BsBookmarkCheckFill />
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
