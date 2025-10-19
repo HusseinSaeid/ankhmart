@@ -57,6 +57,7 @@ export const SearchInput = ({ disabled }: Props) => {
             <Button
               variant={"elevated"}
               className="shrink-0 flex lg:hidden size-12"
+              asChild
             >
               <Link href={"/library"}>
                 <BsBookmarkCheckFill />
