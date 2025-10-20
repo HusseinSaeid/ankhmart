@@ -18,6 +18,11 @@ export const categoriesRouter = createTRPCRouter({
       })),
     }));
 
-    return formattedData;
+    const sortedData = formattedData.sort((a, b) => {
+      if (a.slug === "all") return -1;
+      if (b.slug === "all") return 1;
+      return 0;
+    });
+    return sortedData;
   }),
 });

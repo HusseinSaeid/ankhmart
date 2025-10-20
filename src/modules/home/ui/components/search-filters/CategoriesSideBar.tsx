@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -20,6 +20,10 @@ interface Props {
 }
 
 export const CategoriesSideBar = ({ open, onOpenChange }: Props) => {
+  const params = useParams();
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
+
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
@@ -85,6 +89,10 @@ export const CategoriesSideBar = ({ open, onOpenChange }: Props) => {
             </button>
           )}
           {currentCategories.map((category) => {
+            const isActive = category.slug === activeCategory;
+            const defaultBg = isActive
+              ? category.color || "black"
+              : categoryBackgroundColor || "white";
             return (
               <button
                 onClick={() => handleCategoryClick(category)}
@@ -94,12 +102,12 @@ export const CategoriesSideBar = ({ open, onOpenChange }: Props) => {
                   e.currentTarget.style.color = "white";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    categoryBackgroundColor;
-                  e.currentTarget.style.color = "black";
+                  e.currentTarget.style.backgroundColor = defaultBg;
+                  e.currentTarget.style.color = isActive ? "white" : "black";
                 }}
                 style={{
-                  backgroundColor: categoryBackgroundColor,
+                  backgroundColor: defaultBg,
+                  color: isActive ? "white" : "black",
                   transition: "background-color 0.1s ease, color 0.1s ease",
                 }}
                 key={category.slug}

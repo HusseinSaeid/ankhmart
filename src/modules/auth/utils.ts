@@ -10,7 +10,6 @@ export const generateAuthCookie = async ({ prefix, value }: Props) => {
     value,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
