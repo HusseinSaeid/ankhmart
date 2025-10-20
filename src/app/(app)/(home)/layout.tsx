@@ -1,6 +1,9 @@
-import { Footer } from "./Footer";
-import { NavBar } from "./NavBar";
-import { SearchFilters, SearchFiltersIsLoading } from "./search-filters/Index";
+import { Footer } from "@/modules/home/ui/components/Footer";
+import { NavBar } from "@/modules/home/ui/components/NavBar";
+import {
+  SearchFilters,
+  SearchFiltersIsLoading,
+} from "@/modules/home/ui/components/search-filters/Index";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";

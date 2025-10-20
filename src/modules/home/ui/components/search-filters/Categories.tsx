@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 import { VscListFilter } from "react-icons/vsc";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 export const Categories = () => {
+  const params = useParams();
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
@@ -20,10 +22,10 @@ export const Categories = () => {
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-  const activeCategore = "all";
-
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
   const activeCategoreIndex = data.findIndex(
-    (cat) => cat.slug === activeCategore
+    (cat) => cat.slug === activeCategory
   );
   const isActiveCategoreHidden =
     activeCategoreIndex >= visibleCount && activeCategoreIndex !== -1;
@@ -67,7 +69,7 @@ export const Categories = () => {
           <div key={category.id}>
             <CategoryDropdown
               category={category}
-              isActive={activeCategore === category.slug}
+              isActive={activeCategory === category.slug}
               isNavigationHovered={false}
             />
           </div>
@@ -84,7 +86,7 @@ export const Categories = () => {
           <div key={category.id}>
             <CategoryDropdown
               category={category}
-              isActive={activeCategore === category.slug}
+              isActive={activeCategory === category.slug}
               isNavigationHovered={false}
             />
           </div>

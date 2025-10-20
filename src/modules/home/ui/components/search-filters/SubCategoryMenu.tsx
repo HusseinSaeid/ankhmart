@@ -1,6 +1,7 @@
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { usePathname } from "next/navigation";
 
 interface props {
   category: CategoriesGetManyOutput[1];
@@ -8,6 +9,10 @@ interface props {
   position: { top: number; left: number };
 }
 export const SubCategoryMenu = ({ category, isOpen, position }: props) => {
+  const pathname = usePathname();
+  const pathSegments = pathname?.split("/").filter(Boolean);
+  const activeSubcategorySlug = pathSegments?.[1];
+
   if (
     !isOpen ||
     !category.subcategories ||
@@ -28,15 +33,23 @@ export const SubCategoryMenu = ({ category, isOpen, position }: props) => {
         className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
       >
         <div>
-          {category.subcategories?.map((subcategories: Category) => (
-            <Link
-              key={subcategories.slug}
-              href={`/${category.slug}/${subcategories.slug}`}
-              className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-medium"
-            >
-              <span className="capitalize">{subcategories.name}</span>
-            </Link>
-          ))}
+          {category.subcategories.map((sub) => {
+            const isActive = sub.slug === activeSubcategorySlug;
+
+            return (
+              <Link
+                key={sub.slug}
+                href={`/${category.slug}/${sub.slug}`}
+                className={`w-full text-left p-4 flex justify-between items-center underline font-medium transition-colors ${
+                  isActive
+                    ? "bg-black text-white"
+                    : "hover:bg-black hover:text-white"
+                }`}
+              >
+                <span className="capitalize">{sub.name}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
