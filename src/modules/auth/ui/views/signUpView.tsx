@@ -25,10 +25,13 @@ import { registerSchema } from "../../schemas";
 
 import { Poppins } from "next/font/google";
 import { FaAnkh } from "react-icons/fa6";
+import { VscEye } from "react-icons/vsc";
+import { VscEyeClosed } from "react-icons/vsc";
 
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,6 +40,8 @@ const poppins = Poppins({
 });
 
 export const SignUpView = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -144,16 +149,36 @@ export const SignUpView = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter Your Passwoed"
-                      {...field}
-                      type="password"
-                    />
+                    <div className="relative">
+                      <Input
+                        placeholder="Enter Your Password"
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        className="pr-10" // padding يمين عشان الأيقونة ما تغطيش النص
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <VscEye className="h-4 w-4" aria-hidden="true" />
+                        ) : (
+                          <VscEyeClosed
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <Button
               disabled={register.isPending}
               type="submit"

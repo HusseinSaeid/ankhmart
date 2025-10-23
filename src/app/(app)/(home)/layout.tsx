@@ -24,7 +24,7 @@ export default async function Layout({ children }: Props) {
         </Suspense>
       </HydrationBoundary>
 
-      <div className="flex-1 bg-[#f4f4f0]">{children}</div>
+      <div className="flex-1 w-screen bg-[#f4f4f0]">{children}</div>
       <Footer />
     </div>
   );
