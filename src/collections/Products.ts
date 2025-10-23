@@ -13,6 +13,12 @@ export const Products: CollectionConfig = {
       name: "price",
       type: "number",
       required: true,
+      min: 0,
+      validate: (value: number) => {
+        if (value < 0) return "Price must be a positive number";
+        if (!Number.isFinite(value)) return "Price must be a valid number";
+        return true;
+      },
     },
     {
       name: "category",
