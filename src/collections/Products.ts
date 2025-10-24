@@ -2,6 +2,9 @@ import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "products",
+  admin: {
+    useAsTitle: "name",
+  },
   fields: [
     {
       name: "name",
@@ -14,12 +17,8 @@ export const Products: CollectionConfig = {
       type: "number",
       required: true,
       min: 0,
-      validate: (value: number) => {
-        if (value < 0) return "Price must be a positive number";
-        if (!Number.isFinite(value)) return "Price must be a valid number";
-        return true;
-      },
     },
+    { name: "size", type: "text", hasMany: true },
     {
       name: "category",
       type: "relationship",
