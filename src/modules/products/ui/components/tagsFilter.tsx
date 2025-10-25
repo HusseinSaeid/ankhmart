@@ -49,6 +49,7 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
               <Checkbox
                 checked={value?.includes(tag.name)}
                 onCheckedChange={() => onClick(tag.name)}
+                onClick={(e) => e.stopPropagation()}
                 className="cursor-pointer"
               />
             </div>
