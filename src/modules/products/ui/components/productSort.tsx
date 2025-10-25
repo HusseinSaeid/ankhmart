@@ -53,7 +53,7 @@ export const ProductSort = () => {
         variant={"secondary"}
         onClick={() => setFilters({ sort: "highest price" })}
       >
-        Higest price
+        Highest price
       </Button>
       <Button
         size="sm"
