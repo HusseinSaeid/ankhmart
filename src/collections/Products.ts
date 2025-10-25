@@ -17,8 +17,16 @@ export const Products: CollectionConfig = {
       type: "number",
       required: true,
       min: 0,
+      index: true,
     },
     { name: "size", type: "text", hasMany: true },
+    {
+      name: "tags",
+      type: "relationship",
+      relationTo: "tags",
+      hasMany: true,
+    },
+
     {
       name: "category",
       type: "relationship",
