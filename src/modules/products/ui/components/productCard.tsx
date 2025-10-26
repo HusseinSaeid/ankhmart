@@ -61,12 +61,15 @@ export const ProductCard = ({
         </div>
         <div className="p-4">
           <div className=" relative px-2 py-1 border bg-amber-400 w-fit">
-            <p className="text-sm font-medium"></p>
+         <div className=" relative px-2 py-1 border bg-amber-400 w-fit">
+          <p className="text-sm font-medium">
             {new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "EGP",
               maximumFractionDigits: 0,
             }).format(Number(price))}
+          </p>
+         </div>
           </div>
         </div>
       </div>
