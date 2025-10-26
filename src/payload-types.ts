@@ -72,6 +72,8 @@ export interface Config {
     categories: Category;
     products: Product;
     tags: Tag;
+    size: Size;
+    color: Color;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,6 +89,8 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    size: SizeSelect<false> | SizeSelect<true>;
+    color: ColorSelect<false> | ColorSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -195,8 +199,9 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  size?: string[] | null;
   tags?: (string | Tag)[] | null;
+  size?: (string | Size)[] | null;
+  color?: (string | Color)[] | null;
   category?: (string | null) | Category;
   image: string | Media;
   updatedAt: string;
@@ -207,6 +212,26 @@ export interface Product {
  * via the `definition` "tags".
  */
 export interface Tag {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "size".
+ */
+export interface Size {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color".
+ */
+export interface Color {
   id: string;
   name: string;
   updatedAt: string;
@@ -238,6 +263,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'size';
+        value: string | Size;
+      } | null)
+    | ({
+        relationTo: 'color';
+        value: string | Color;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -344,8 +377,9 @@ export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   price?: T;
-  size?: T;
   tags?: T;
+  size?: T;
+  color?: T;
   category?: T;
   image?: T;
   updatedAt?: T;
@@ -356,6 +390,24 @@ export interface ProductsSelect<T extends boolean = true> {
  * via the `definition` "tags_select".
  */
 export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "size_select".
+ */
+export interface SizeSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color_select".
+ */
+export interface ColorSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;

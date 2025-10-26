@@ -8,11 +8,11 @@ interface TagsFilterProps {
   onChange: (value: string[]) => void;
 }
 
-export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
+export const ColorFilter = ({ value, onChange }: TagsFilterProps) => {
   const trps = useTRPC();
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
-      trps.tags.getMany.infiniteQueryOptions(
+      trps.color.getMany.infiniteQueryOptions(
         {
           limit: 10,
         },
@@ -23,11 +23,11 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         }
       )
     );
-  const onClick = (tag: string) => {
-    if (value?.includes(tag)) {
-      onChange(value?.filter((t) => t !== tag) || []);
+  const onClick = (color: string) => {
+    if (value?.includes(color)) {
+      onChange(value?.filter((c) => c !== color) || []);
     } else {
-      onChange([...(value || []), tag]);
+      onChange([...(value || []), color]);
     }
   };
 
@@ -39,16 +39,24 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         </div>
       ) : (
         data?.pages.map((page) =>
-          page.docs.map((tag) => (
+          page.docs.map((color) => (
             <div
-              key={tag.id}
+              key={color.id}
               className="flex items-center justify-between cursor-pointer"
-              onClick={() => onClick(tag.name)}
+              onClick={() => onClick(color.name)}
             >
-              <p className="font-medium capitalize">{tag.name}</p>
+              <p
+                style={{
+                  color:
+                    color.name === "white" ? "rgba(0, 0, 0, 0.5)" : color.name,
+                }}
+                className="font-medium capitalize"
+              >
+                {color.name}
+              </p>
               <Checkbox
-                checked={value?.includes(tag.name)}
-                onCheckedChange={() => onClick(tag.name)}
+                checked={value?.includes(color.name)}
+                onCheckedChange={() => onClick(color.name)}
                 onClick={(e) => e.stopPropagation()}
                 className="cursor-pointer"
               />

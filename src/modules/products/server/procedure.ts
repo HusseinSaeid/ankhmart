@@ -1,4 +1,4 @@
-import { Category } from "@/payload-types";
+import { Category, Media } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 import z from "zod";
@@ -9,9 +9,14 @@ export const productsRouter = createTRPCRouter({
     .input(
       z.object({
         category: z.string().nullable().optional(),
+        cursor: z.number().default(1),
+        limit: z.number().default(10),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
         tags: z.array(z.string()).nullable().optional(),
+        color: z.array(z.string()).nullable().optional(),
+        size: z.array(z.string()).nullable().optional(),
+
         sort: z.enum(sortValues).nullable().optional(),
       })
     )
@@ -73,13 +78,32 @@ export const productsRouter = createTRPCRouter({
           in: input.tags,
         };
       }
+      if (input.color && input.color?.length > 0) {
+        where["color.name"] = {
+          in: input.color,
+        };
+      }
+      if (input.size && input.size?.length > 0) {
+        where["size.name"] = {
+          in: input.size,
+        };
+      }
+
       const data = await ctx.db.find({
         collection: "products",
         depth: 1,
         where,
         sort,
+        page: input.cursor,
+        limit: input.limit,
       });
 
-      return data;
+      return {
+        ...data,
+        docs: data.docs.map((doc) => ({
+          ...doc,
+          image: doc.image as Media | null,
+        })),
+      };
     }),
 });

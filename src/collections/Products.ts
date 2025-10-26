@@ -19,11 +19,22 @@ export const Products: CollectionConfig = {
       min: 0,
       index: true,
     },
-    { name: "size", type: "text", hasMany: true },
     {
       name: "tags",
       type: "relationship",
       relationTo: "tags",
+      hasMany: true,
+    },
+    {
+      name: "size",
+      type: "relationship",
+      relationTo: "size",
+      hasMany: true,
+    },
+    {
+      name: "color",
+      type: "relationship",
+      relationTo: "color",
       hasMany: true,
     },
 
