@@ -8,11 +8,11 @@ interface TagsFilterProps {
   onChange: (value: string[]) => void;
 }
 
-export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
+export const SizeFilter = ({ value, onChange }: TagsFilterProps) => {
   const trps = useTRPC();
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
-      trps.tags.getMany.infiniteQueryOptions(
+      trps.size.getMany.infiniteQueryOptions(
         {
           limit: 10,
         },
@@ -23,11 +23,11 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         }
       )
     );
-  const onClick = (tag: string) => {
-    if (value?.includes(tag)) {
-      onChange(value?.filter((t) => t !== tag) || []);
+  const onClick = (size: string) => {
+    if (value?.includes(size)) {
+      onChange(value?.filter((s) => s !== size) || []);
     } else {
-      onChange([...(value || []), tag]);
+      onChange([...(value || []), size]);
     }
   };
 
@@ -39,16 +39,16 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         </div>
       ) : (
         data?.pages.map((page) =>
-          page.docs.map((tag) => (
+          page.docs.map((size) => (
             <div
-              key={tag.id}
+              key={size.id}
               className="flex items-center justify-between cursor-pointer"
-              onClick={() => onClick(tag.name)}
+              onClick={() => onClick(size.name)}
             >
-              <p className="font-medium capitalize">{tag.name}</p>
+              <p className="font-medium capitalize">{size.name}</p>
               <Checkbox
-                checked={value?.includes(tag.name)}
-                onCheckedChange={() => onClick(tag.name)}
+                checked={value?.includes(size.name)}
+                onCheckedChange={() => onClick(size.name)}
                 onClick={(e) => e.stopPropagation()}
                 className="cursor-pointer"
               />

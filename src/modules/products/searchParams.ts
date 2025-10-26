@@ -19,5 +19,11 @@ const params = {
   tags: parseAsArrayOf(parseAsString)
     .withOptions({ clearOnDefault: true })
     .withDefault([]),
+  color: parseAsArrayOf(parseAsString)
+    .withOptions({ clearOnDefault: true })
+    .withDefault([]),
+  size: parseAsArrayOf(parseAsString)
+    .withOptions({ clearOnDefault: true })
+    .withDefault([]),
 };
 export const loadProductFilters = createLoader(params);

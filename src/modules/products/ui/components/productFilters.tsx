@@ -7,6 +7,8 @@ import { FaChevronRight } from "react-icons/fa";
 import { PriceFilter } from "./priceFilter";
 import { UseProductFilters } from "../../hooks/UseProductFilters";
 import { TagsFilter } from "./tagsFilter";
+import { ColorFilter } from "./colorFilter";
+import { SizeFilter } from "./sizeFilter";
 
 interface ProductFiltersProps {
   title: string;
@@ -47,7 +49,7 @@ export const ProductFilters = () => {
     return value !== null;
   });
   const onClear = () => {
-    setFilters({ minPrice: "", maxPrice: "", tags: [] });
+    setFilters({ minPrice: "", maxPrice: "", tags: [], color: [] });
   };
   return (
     <div className=" border rounded-md bg-white">
@@ -75,6 +77,18 @@ export const ProductFilters = () => {
         <TagsFilter
           value={filters.tags}
           onChange={(value) => onChange("tags", value)}
+        />
+      </ProductFilter>
+      <ProductFilter title="Color">
+        <ColorFilter
+          value={filters.color}
+          onChange={(value) => onChange("color", value)}
+        />
+      </ProductFilter>
+      <ProductFilter title="Size">
+        <SizeFilter
+          value={filters.size}
+          onChange={(value) => onChange("size", value)}
         />
       </ProductFilter>
     </div>

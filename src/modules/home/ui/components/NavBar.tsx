@@ -88,7 +88,7 @@ export const NavBar = () => {
         </div>
         {session.data?.user ? (
           <div className="hidden lg:flex">
-            <div className="flex items-center bg-[#D4AF37] px-12 h-full  border-t-0 border-b-0 border-r-0 border-l  ">
+            <div className="flex items-center bg-amber-400 px-12 h-full  border-t-0 border-b-0 border-r-0 border-l  ">
               <div className=" capitalize p-2 h-8 bg-black flex items-center justify-center font-semibold text-base text-white border border-white">
                 <p>{session.data?.user?.username}</p>
               </div>
@@ -96,7 +96,7 @@ export const NavBar = () => {
             <Button
               asChild
               className={cn(
-                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-[#D4AF37] transition-colors text-lg hover:text-black"
+                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-amber-400 transition-colors text-lg hover:text-black"
               )}
             >
               <Link href="/admin">Dashboard</Link>
@@ -108,7 +108,7 @@ export const NavBar = () => {
               asChild
               variant="secondary"
               className={cn(
-                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-white hover:bg-[#D4AF37] transition-colors text-lg"
+                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-white hover:bg-amber-400 transition-colors text-lg"
               )}
             >
               <Link prefetch href="/sign-in">
@@ -118,7 +118,7 @@ export const NavBar = () => {
             <Button
               asChild
               className={cn(
-                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-[#D4AF37] transition-colors text-lg hover:text-black"
+                "border-t-0 border-b-0 border-r-0 border-l px-12 h-full rounded-none bg-black hover:bg-amber-400 transition-colors text-lg hover:text-black"
               )}
             >
               <Link prefetch href="/sign-up">
