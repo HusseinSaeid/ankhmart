@@ -74,6 +74,7 @@ export interface Config {
     tags: Tag;
     size: Size;
     color: Color;
+    tenants: Tenant;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -91,6 +92,7 @@ export interface Config {
     tags: TagsSelect<false> | TagsSelect<true>;
     size: SizeSelect<false> | SizeSelect<true>;
     color: ColorSelect<false> | ColorSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -134,6 +136,13 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   username: string;
+  roles?: ('super-admin' | 'user')[] | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -151,6 +160,35 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  /**
+   * This is the Store Name
+   */
+  name: string;
+  /**
+   * This is the subdomain of the store
+   */
+  slug: string;
+  color?: (string | null) | Color;
+  image?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color".
+ */
+export interface Color {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -196,6 +234,7 @@ export interface Category {
  */
 export interface Product {
   id: string;
+  tenant?: (string | null) | Tenant;
   name: string;
   description?: string | null;
   price: number;
@@ -222,16 +261,6 @@ export interface Tag {
  * via the `definition` "size".
  */
 export interface Size {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "color".
- */
-export interface Color {
   id: string;
   name: string;
   updatedAt: string;
@@ -271,6 +300,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'color';
         value: string | Color;
+      } | null)
+    | ({
+        relationTo: 'tenants';
+        value: string | Tenant;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -320,6 +353,13 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   username?: T;
+  roles?: T;
+  tenants?:
+    | T
+    | {
+        tenant?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -374,6 +414,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   description?: T;
   price?: T;
@@ -409,6 +450,18 @@ export interface SizeSelect<T extends boolean = true> {
  */
 export interface ColorSelect<T extends boolean = true> {
   name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants_select".
+ */
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  color?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }
