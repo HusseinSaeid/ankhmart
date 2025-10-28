@@ -1,4 +1,3 @@
-import { Category } from "@/payload-types";
 import Link from "next/link";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { usePathname } from "next/navigation";
@@ -6,9 +5,8 @@ import { usePathname } from "next/navigation";
 interface props {
   category: CategoriesGetManyOutput[1];
   isOpen: boolean;
-  position: { top: number; left: number };
 }
-export const SubCategoryMenu = ({ category, isOpen, position }: props) => {
+export const SubCategoryMenu = ({ category, isOpen }: props) => {
   const pathname = usePathname();
   const pathSegments = pathname?.split("/").filter(Boolean);
   const activeSubcategorySlug = pathSegments?.[1];
@@ -23,14 +21,11 @@ export const SubCategoryMenu = ({ category, isOpen, position }: props) => {
   const backgroundColor = category.color || "#f5f5f5";
 
   return (
-    <div
-      className="fixed z-100"
-      style={{ top: position.top, left: position.left }}
-    >
+    <div className="absolute z-100" style={{ top: "100%", left: 0 }}>
       <div className="h-3 w-60"></div>
       <div
         style={{ backgroundColor }}
-        className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
+        className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
       >
         <div>
           {category.subcategories.map((sub) => {

@@ -27,11 +27,8 @@ interface NavBarItemProps {
 }
 
 const NavBarItems = [
-  { children: "Home", href: "/" },
+  { children: "Shop", href: "/" },
   { children: "About", href: "/about" },
-  { children: "Features", href: "/features" },
-  { children: "Pricing", href: "/pricing" },
-  { children: "Contact", href: "/contact" },
 ];
 
 const NavBarItem = ({ children, href, isactive }: NavBarItemProps) => {
