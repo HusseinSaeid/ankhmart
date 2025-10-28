@@ -11,6 +11,7 @@ interface ProductCardProps {
   reviewRating: number;
   reviewCount: number;
   price: number;
+  categoryColor?: string | null;
 }
 
 export const ProductCard = ({
@@ -43,9 +44,9 @@ export const ProductCard = ({
               <Image
                 alt={sellerUserName}
                 src={sellerImageUrl}
-                width={16}
-                height={16}
-                className="rounded-full border shrink-0 size-[16px]"
+                width={32}
+                height={32}
+                className="rounded-full border shrink-0 size-[32px]"
               />
             )}
             <p className="text-sm underline font-medium">{sellerUserName}</p>
@@ -61,15 +62,15 @@ export const ProductCard = ({
         </div>
         <div className="p-4">
           <div className=" relative px-2 py-1 border bg-amber-400 w-fit">
-         <div className=" relative px-2 py-1 border bg-amber-400 w-fit">
-          <p className="text-sm font-medium">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "EGP",
-              maximumFractionDigits: 0,
-            }).format(Number(price))}
-          </p>
-         </div>
+            <div className=" relative px-2 py-1 border bg-amber-400 w-fit">
+              <p className="text-sm font-medium">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "EGP",
+                  maximumFractionDigits: 0,
+                }).format(Number(price))}
+              </p>
+            </div>
           </div>
         </div>
       </div>

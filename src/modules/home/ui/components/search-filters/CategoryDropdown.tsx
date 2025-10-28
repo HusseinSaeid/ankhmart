@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useDropDownPosition } from "./useDropDownPosition";
 import { SubCategoryMenu } from "./SubCategoryMenu";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
@@ -21,7 +20,6 @@ export const CategoryDropdown = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
-  const { getDropDownPosition } = useDropDownPosition(dropDownRef);
 
   const onMouseEnter = () => {
     if (category.subcategories) setIsOpen(true);
@@ -29,7 +27,6 @@ export const CategoryDropdown = ({
   const onMouseLeave = () => {
     setIsOpen(false);
   };
-  const dropDownPosition = getDropDownPosition();
 
   return (
     <div
@@ -46,7 +43,7 @@ export const CategoryDropdown = ({
               "h-11 px-4 bg-transparent border-transparent  hover:bg-white hover:border-primary text-black",
               isActive && !isNavigationHovered && "bg-white border-primary ",
               isOpen &&
-                "border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
+                "border-primary bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
             )}
           >
             <span className="capitalize">{category.name}</span>
@@ -62,11 +59,7 @@ export const CategoryDropdown = ({
           />
         )}
       </div>
-      <SubCategoryMenu
-        category={category}
-        isOpen={isOpen}
-        position={dropDownPosition}
-      />
+      <SubCategoryMenu category={category} isOpen={isOpen} />
     </div>
   );
 };

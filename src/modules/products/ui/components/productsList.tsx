@@ -13,6 +13,7 @@ interface Props {
 export const ProductsList = ({ category }: Props) => {
   const [filters] = UseProductFilters();
   const trpc = useTRPC();
+
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery(
       trpc.products.getMany.infiniteQueryOptions(
@@ -42,19 +43,23 @@ export const ProductsList = ({ category }: Props) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
         {data?.pages
           .flatMap((page) => page.docs)
-          .map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              imageUrl={product.image?.url}
-              price={product.price}
-              sellerUserName="Sehs"
-              sellerImageUrl={undefined}
-              reviewRating={3}
-              reviewCount={5}
-            />
-          ))}
+          .map((product) => {
+            // هنا نعرف categoryData لكل منتج
+
+            return (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                imageUrl={product.image?.url}
+                price={product.price}
+                sellerUserName="Sehs"
+                sellerImageUrl={"/images/sellerimage.png"}
+                reviewRating={3}
+                reviewCount={5}
+              />
+            );
+          })}
       </div>
       <div className="flex justify-center pt-8">
         {hasNextPage && (
