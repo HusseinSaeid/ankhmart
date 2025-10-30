@@ -26,6 +26,9 @@ const params = {
   size: parseAsArrayOf(parseAsString)
     .withOptions({ clearOnDefault: true })
     .withDefault([]),
+  tenantSlug: parseAsArrayOf(parseAsString)
+    .withOptions({ clearOnDefault: true })
+    .withDefault([]),
 };
 export const UseProductFilters = () => {
   return useQueryStates(params);

@@ -27,7 +27,7 @@ interface NavBarItemProps {
 }
 
 const NavBarItems = [
-  { children: "Shop", href: "/" },
+  { children: "Shop", href: "/shop" },
   { children: "About", href: "/about" },
 ];
 
@@ -77,7 +77,7 @@ export const NavBar = () => {
             <NavBarItem
               key={item.href}
               href={item.href}
-              isactive={pathname === item.href}
+              isactive={pathname.startsWith(item.href)}
             >
               {item.children}
             </NavBarItem>

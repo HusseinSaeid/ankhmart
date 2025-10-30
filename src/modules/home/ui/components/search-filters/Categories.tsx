@@ -8,6 +8,7 @@ import { VscListFilter } from "react-icons/vsc";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export const Categories = () => {
   const params = useParams();
@@ -23,7 +24,7 @@ export const Categories = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   const categoryParam = params.category as string | undefined;
-  const activeCategory = categoryParam || "all";
+  const activeCategory = categoryParam;
   const activeCategoreIndex = data.findIndex(
     (cat) => cat.slug === activeCategory
   );
@@ -82,6 +83,20 @@ export const Categories = () => {
         onMouseLeave={() => setIsAnyHovered(false)}
         className="flex flex-nowrap items-center"
       >
+        <Link href={"/shop"}>
+          <Button
+            variant={"elevated"}
+            className={cn(
+              "h-11 px-4 bg-transparent border-transparent  hover:bg-white hover:border-primary text-black",
+              isActiveCategoreHidden &&
+                !isAnyHovered &&
+                "bg-white border-primary "
+            )}
+          >
+            All
+          </Button>
+        </Link>
+
         {data.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown

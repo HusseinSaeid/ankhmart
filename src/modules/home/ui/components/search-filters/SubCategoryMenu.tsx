@@ -34,7 +34,7 @@ export const SubCategoryMenu = ({ category, isOpen }: props) => {
             return (
               <Link
                 key={sub.slug}
-                href={`/${category.slug}/${sub.slug}`}
+                href={`/shop/${category.slug}/${sub.slug}`}
                 className={`w-full text-left p-4 flex justify-between items-center underline font-medium transition-colors ${
                   isActive
                     ? "bg-black text-white"
