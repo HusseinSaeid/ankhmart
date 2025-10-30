@@ -9,15 +9,16 @@ import { TbInboxOff } from "react-icons/tb";
 
 interface Props {
   category?: string;
+  tenantSlug?: string;
 }
-export const ProductsList = ({ category }: Props) => {
+export const ProductsList = ({ category, tenantSlug }: Props) => {
   const [filters] = UseProductFilters();
   const trpc = useTRPC();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery(
       trpc.products.getMany.infiniteQueryOptions(
-        { ...filters, category, limit: 20 },
+        { ...filters, category, tenantSlug, limit: 20 },
         {
           getNextPageParam: (lastPage) => {
             return lastPage.docs.length > 0 ? lastPage.nextPage : undefined;
@@ -37,15 +38,12 @@ export const ProductsList = ({ category }: Props) => {
       </div>
     );
   }
-
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
         {data?.pages
           .flatMap((page) => page.docs)
           .map((product) => {
-            // هنا نعرف categoryData لكل منتج
-
             return (
               <ProductCard
                 key={product.id}
@@ -53,8 +51,8 @@ export const ProductsList = ({ category }: Props) => {
                 name={product.name}
                 imageUrl={product.image?.url}
                 price={product.price}
-                sellerUserName="Sehs"
-                sellerImageUrl={"/images/sellerimage.png"}
+                sellerUserName={product.tenant?.name}
+                sellerImageUrl={product.tenant.image?.url}
                 reviewRating={3}
                 reviewCount={5}
               />

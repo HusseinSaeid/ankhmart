@@ -49,12 +49,12 @@ export const CategoriesSideBar = ({ open, onOpenChange }: Props) => {
       setSelectedCategory(category);
     } else {
       if (parentCategories && selectedCategory) {
-        router.push(`/${selectedCategory.slug}/${category.slug}`);
+        router.push(`/shop/${selectedCategory.slug}/${category.slug}`);
       } else {
         if (category.slug === "all") {
-          router.push("/");
+          router.push("/shop");
         } else {
-          router.push(`/${category.slug}`);
+          router.push(`/shop/${category.slug}`);
         }
       }
       handleOpenChange(false);

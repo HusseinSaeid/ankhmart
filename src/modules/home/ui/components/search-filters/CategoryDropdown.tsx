@@ -36,7 +36,7 @@ export const CategoryDropdown = ({
       onMouseLeave={onMouseLeave}
     >
       <div className="relative">
-        <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
+        <Link href={`/shop/${category.slug === "all" ? "" : category.slug}`}>
           <Button
             variant={"elevated"}
             className={cn(

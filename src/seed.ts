@@ -2,7 +2,6 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 
 const categories = [
-  { name: "All", slug: "all", order: 0 },
   {
     name: "Men's Fashion",
     color: "#6C63FF",
