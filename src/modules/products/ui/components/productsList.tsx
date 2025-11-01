@@ -51,10 +51,11 @@ export const ProductsList = ({ category, tenantSlug }: Props) => {
                 name={product.name}
                 imageUrl={product.image?.url}
                 price={product.price}
-                sellerUserName={product.tenant?.name}
+                sellerUserName={product.tenant?.slug}
                 sellerImageUrl={product.tenant.image?.url}
                 reviewRating={3}
                 reviewCount={5}
+                stock={product.stock}
               />
             );
           })}

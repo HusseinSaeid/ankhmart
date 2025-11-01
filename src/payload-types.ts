@@ -238,6 +238,7 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
+  stock: 'in-stock' | 'out-of-stock';
   tags?: (string | Tag)[] | null;
   size?: (string | Size)[] | null;
   color?: (string | Color)[] | null;
@@ -418,6 +419,7 @@ export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   price?: T;
+  stock?: T;
   tags?: T;
   size?: T;
   color?: T;

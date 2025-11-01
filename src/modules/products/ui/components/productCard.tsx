@@ -3,6 +3,9 @@ import Image from "next/image";
 import { LiaStarSolid } from "react-icons/lia";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { FaCartPlus } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
   id: string;
@@ -13,6 +16,7 @@ interface ProductCardProps {
   reviewRating: number;
   reviewCount: number;
   price: number;
+  stock: string;
 }
 
 export const ProductCard = ({
@@ -24,6 +28,7 @@ export const ProductCard = ({
   reviewRating,
   reviewCount,
   price,
+  stock,
 }: ProductCardProps) => {
   const router = useRouter();
   const handleUserClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -32,7 +37,7 @@ export const ProductCard = ({
     router.push(`/tenants/${sellerUserName}`);
   };
   return (
-    <Link href={`/product/${id}`}>
+    <Link href={`/shop/products/${id}`}>
       <div className="hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">
         <div className="relative aspect-square">
           <Image
@@ -70,7 +75,7 @@ export const ProductCard = ({
             </div>
           )}
         </div>
-        <div className="p-4">
+        <div className="p-4 flex justify-between">
           <div className=" relative px-2 py-1 border bg-amber-400  w-fit">
             <p className="text-sm font-medium">
               {new Intl.NumberFormat("en-US", {
@@ -80,6 +85,18 @@ export const ProductCard = ({
               }).format(Number(price))}
             </p>
           </div>
+          {stock === "in-stock" ? (
+            <div>
+              <Button variant="elevated" className={cn("h-8 bg-amber-400 ")}>
+                <FaCartPlus size={10} />
+                Add to Cart
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <p className="font-medium text-2xl">Out of Stock</p>
+            </div>
+          )}
         </div>
       </div>
     </Link>

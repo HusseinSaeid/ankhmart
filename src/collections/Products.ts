@@ -20,6 +20,15 @@ export const Products: CollectionConfig = {
       index: true,
     },
     {
+      name: "stock",
+      type: "select",
+      defaultValue: ["in-stock"],
+      hasMany: false,
+      options: ["in-stock", "out-of-stock"],
+      required: true,
+    },
+
+    {
       name: "tags",
       type: "relationship",
       relationTo: "tags",
