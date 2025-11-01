@@ -1,7 +1,7 @@
 "use client";
 import { SearchInput } from "./SearchInput";
 import { Categories } from "./Categories";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { BreadCrumbNavigation } from "./BreadCrumbNavigation";
@@ -10,6 +10,8 @@ const SearchFilters = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
   const params = useParams();
+  const pathname = usePathname();
+
   const categoryParam = params.category as string | undefined;
   const activeCategory = categoryParam || "all";
   const activeCategoryDate = data.find(
@@ -23,6 +25,7 @@ const SearchFilters = () => {
     activeCategoryDate?.subcategories.find(
       (subCategory) => subCategory.slug === activeSubCategoryParam
     )?.name || null;
+  const isProductPage = pathname?.includes("/shop/products/");
 
   return (
     <div
@@ -30,9 +33,7 @@ const SearchFilters = () => {
       style={{ backgroundColor: activeCategoryColor }}
     >
       <SearchInput />
-      <div className=" hidden lg:block">
-        <Categories />
-      </div>
+      <div className=" hidden lg:block">{!isProductPage && <Categories />}</div>
       <BreadCrumbNavigation
         activeCategory={activeCategory}
         activeCategoryName={activeCategoryName}
