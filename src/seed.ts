@@ -3,163 +3,132 @@ import config from "@payload-config";
 
 const categories = [
   {
-    name: "Men's Fashion",
+    name: "Design Assets",
     color: "#6C63FF",
-    slug: "mens-fashion",
+    slug: "design-assets",
     order: 1,
     subcategories: [
-      { name: "T-Shirts", slug: "mens-t-shirts" },
-      { name: "Shirts", slug: "mens-shirts" },
-      { name: "Jeans & Pants", slug: "mens-jeans-pants" },
-      { name: "Jackets & Coats", slug: "mens-jackets-coats" },
-      { name: "Suits & Blazers", slug: "mens-suits-blazers" },
-      { name: "Underwear", slug: "mens-underwear" },
-      { name: "Shoes", slug: "mens-shoes" },
-      { name: "Watches", slug: "mens-watches" },
-      { name: "Accessories", slug: "mens-accessories" },
+      { name: "UI Kits", slug: "ui-kits" },
+      { name: "Icons", slug: "icons" },
+      { name: "Illustrations", slug: "illustrations" },
+      { name: "3D Assets", slug: "3d-assets" },
+      { name: "Mockups", slug: "mockups" },
     ],
   },
   {
-    name: "Women's Fashion",
+    name: "Courses & Tutorials",
     color: "#FF6B81",
-    slug: "womens-fashion",
+    slug: "courses-tutorials",
     order: 2,
     subcategories: [
-      { name: "Dresses", slug: "womens-dresses" },
-      { name: "Tops & Blouses", slug: "womens-tops-blouses" },
-      { name: "Skirts", slug: "womens-skirts" },
-      { name: "Pants & Jeans", slug: "womens-pants-jeans" },
-      { name: "Outerwear", slug: "womens-outerwear" },
-      { name: "Shoes & Heels", slug: "womens-shoes-heels" },
-      { name: "Bags & Purses", slug: "womens-bags-purses" },
-      { name: "Jewelry", slug: "womens-jewelry" },
-      { name: "Watches", slug: "womens-watches" },
+      { name: "Web Development", slug: "web-development" },
+      { name: "Design", slug: "design" },
+      { name: "Marketing", slug: "marketing" },
+      { name: "Productivity", slug: "productivity" },
     ],
   },
   {
-    name: "Kids",
+    name: "eBooks",
     color: "#FFB347",
-    slug: "kids",
+    slug: "ebooks",
     order: 3,
     subcategories: [
-      { name: "Boys' Clothing", slug: "kids-boys-clothing" },
-      { name: "Girls' Clothing", slug: "kids-girls-clothing" },
-      { name: "Baby Wear", slug: "kids-baby-wear" },
-      { name: "Kids' Shoes", slug: "kids-shoes" },
-      { name: "Accessories", slug: "kids-accessories" },
+      { name: "Programming", slug: "ebooks-programming" },
+      { name: "Design", slug: "ebooks-design" },
+      { name: "Self-Improvement", slug: "ebooks-self-improvement" },
+      { name: "Business", slug: "ebooks-business" },
     ],
   },
   {
-    name: "Shoes",
+    name: "Software & Tools",
     color: "#7EC8E3",
-    slug: "shoes",
+    slug: "software-tools",
     order: 4,
     subcategories: [
-      { name: "Casual Shoes", slug: "casual-shoes" },
-      { name: "Sneakers", slug: "sneakers" },
-      { name: "Formal Shoes", slug: "formal-shoes" },
-      { name: "Boots", slug: "boots" },
-      { name: "Sandals & Slippers", slug: "sandals-slippers" },
+      { name: "Web Apps", slug: "web-apps" },
+      { name: "Plugins", slug: "plugins" },
+      { name: "Code Snippets", slug: "code-snippets" },
+      { name: "APIs", slug: "apis" },
     ],
   },
   {
-    name: "Accessories",
+    name: "Music & Audio",
     color: "#FFD700",
-    slug: "accessories",
+    slug: "music-audio",
     order: 5,
     subcategories: [
-      { name: "Bags & Backpacks", slug: "accessories-bags-backpacks" },
-      { name: "Watches", slug: "accessories-watches" },
-      { name: "Sunglasses", slug: "accessories-sunglasses" },
-      { name: "Belts", slug: "accessories-belts" },
-      { name: "Hats & Caps", slug: "accessories-hats-caps" },
+      { name: "Beats", slug: "beats" },
+      { name: "Sound Effects", slug: "sound-effects" },
+      { name: "Loops & Samples", slug: "loops-samples" },
+      { name: "Voice Packs", slug: "voice-packs" },
     ],
   },
   {
-    name: "Jewelry & Watches",
+    name: "Photography",
     color: "#D8B5FF",
-    slug: "jewelry-watches",
+    slug: "photography",
     order: 6,
     subcategories: [
-      { name: "Bracelets", slug: "jewelry-bracelets" },
-      { name: "Necklaces", slug: "jewelry-necklaces" },
-      { name: "Earrings", slug: "jewelry-earrings" },
-      { name: "Luxury Watches", slug: "jewelry-luxury-watches" },
-      { name: "Smartwatches", slug: "jewelry-smartwatches" },
+      { name: "Stock Photos", slug: "stock-photos" },
+      { name: "Lightroom Presets", slug: "lightroom-presets" },
+      { name: "Photo Packs", slug: "photo-packs" },
     ],
   },
   {
-    name: "Bags & Wallets",
+    name: "Templates",
     color: "#FF9AA2",
-    slug: "bags-wallets",
+    slug: "templates",
     order: 7,
     subcategories: [
-      { name: "Handbags", slug: "bags-handbags" },
-      { name: "Crossbody Bags", slug: "bags-crossbody" },
-      { name: "Travel Bags", slug: "bags-travel" },
-      { name: "Wallets", slug: "bags-wallets-wallets" },
-      { name: "Clutches", slug: "bags-clutches" },
+      { name: "Web Templates", slug: "web-templates" },
+      { name: "Presentation Templates", slug: "presentation-templates" },
+      { name: "Resume Templates", slug: "resume-templates" },
+      { name: "Email Templates", slug: "email-templates" },
     ],
   },
   {
-    name: "Sportswear",
+    name: "Fonts",
     color: "#96E6B3",
-    slug: "sportswear",
+    slug: "fonts",
     order: 8,
     subcategories: [
-      { name: "Activewear", slug: "sports-activewear" },
-      { name: "Running Shoes", slug: "sports-running-shoes" },
-      { name: "Gym Clothing", slug: "sports-gym-clothing" },
-      { name: "Tracksuits", slug: "sports-tracksuits" },
+      { name: "Display Fonts", slug: "display-fonts" },
+      { name: "Sans Serif", slug: "sans-serif" },
+      { name: "Script Fonts", slug: "script-fonts" },
     ],
   },
   {
-    name: "Seasonal Collections",
+    name: "3D & Motion",
     color: "#B5B9FF",
-    slug: "seasonal-collections",
+    slug: "3d-motion",
     order: 9,
     subcategories: [
-      { name: "Winter Collection", slug: "seasonal-winter" },
-      { name: "Summer Collection", slug: "seasonal-summer" },
-      { name: "Autumn Collection", slug: "seasonal-autumn" },
-      { name: "Spring Collection", slug: "seasonal-spring" },
+      { name: "3D Models", slug: "3d-models" },
+      { name: "Animations", slug: "animations" },
+      { name: "Motion Templates", slug: "motion-templates" },
     ],
   },
   {
-    name: "Luxury",
-    color: "#FFCAB0",
-    slug: "luxury",
+    name: "Bundles & Offers",
+    color: "#FF6B6B",
+    slug: "bundles-offers",
     order: 10,
     subcategories: [
-      { name: "Designer Clothes", slug: "luxury-designer-clothes" },
-      { name: "Luxury Shoes", slug: "luxury-shoes" },
-      { name: "Premium Bags", slug: "luxury-premium-bags" },
-      { name: "Gold Jewelry", slug: "luxury-gold-jewelry" },
-      { name: "Luxury Watches", slug: "luxury-watches" },
-    ],
-  },
-  {
-    name: "Sales & Offers",
-    color: "#FF6B6B",
-    slug: "sales-offers",
-    order: 11,
-    subcategories: [
-      { name: "Clearance", slug: "sales-clearance" },
-      { name: "Flash Sale", slug: "sales-flash" },
-      { name: "Buy 1 Get 1", slug: "sales-bogo" },
-      { name: "Discount Codes", slug: "sales-discount" },
-      { name: "Limited Edition", slug: "sales-limited" },
+      { name: "Discounted Bundles", slug: "discounted-bundles" },
+      { name: "Limited Edition", slug: "limited-edition" },
+      { name: "Freebies", slug: "freebies" },
     ],
   },
   {
     name: "Other",
     slug: "other",
-    order: 12,
+    order: 11,
   },
 ];
 
 const seed = async () => {
   const payload = await getPayload({ config });
+
   await payload.create({
     collection: "users",
     data: {
@@ -169,6 +138,7 @@ const seed = async () => {
       username: "superadmin",
     },
   });
+
   for (const category of categories) {
     const parentCategory = await payload.create({
       collection: "categories",
@@ -180,7 +150,8 @@ const seed = async () => {
         order: category.order ?? 0,
       },
     });
-    for (const subcategory of category.subcategories || [])
+
+    for (const subcategory of category.subcategories || []) {
       await payload.create({
         collection: "categories",
         data: {
@@ -189,7 +160,9 @@ const seed = async () => {
           parent: parentCategory.id,
         },
       });
+    }
   }
 };
+
 await seed();
 process.exit(0);

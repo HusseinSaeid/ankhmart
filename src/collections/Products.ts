@@ -25,18 +25,6 @@ export const Products: CollectionConfig = {
       relationTo: "tags",
       hasMany: true,
     },
-    {
-      name: "size",
-      type: "relationship",
-      relationTo: "size",
-      hasMany: true,
-    },
-    {
-      name: "color",
-      type: "relationship",
-      relationTo: "color",
-      hasMany: true,
-    },
 
     {
       name: "category",

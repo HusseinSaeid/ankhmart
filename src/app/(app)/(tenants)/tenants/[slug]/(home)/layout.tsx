@@ -1,4 +1,4 @@
-import Footer from "@/modules/tenants/ui/components/footer";
+import Footer, { FooterSkeleton } from "@/modules/tenants/ui/components/footer";
 import { NavBar, NavBarSkeleton } from "@/modules/tenants/ui/components/navBar";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
@@ -27,7 +27,11 @@ const Layout = async ({ children, params }: LayoutProps) => {
       <div className="flex-1">
         <div className="max-w-(--breakpoint-2xl) mx-auto">{children}</div>
       </div>
-      <Footer />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<FooterSkeleton />}>
+          <Footer slug={slug} />
+        </Suspense>
+      </HydrationBoundary>
     </div>
   );
 };
