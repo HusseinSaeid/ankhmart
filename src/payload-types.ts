@@ -72,7 +72,6 @@ export interface Config {
     categories: Category;
     products: Product;
     tags: Tag;
-    size: Size;
     color: Color;
     tenants: Tenant;
     'payload-locked-documents': PayloadLockedDocument;
@@ -90,7 +89,6 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
-    size: SizeSelect<false> | SizeSelect<true>;
     color: ColorSelect<false> | ColorSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -239,8 +237,6 @@ export interface Product {
   description?: string | null;
   price: number;
   tags?: (string | Tag)[] | null;
-  size?: (string | Size)[] | null;
-  color?: (string | Color)[] | null;
   category?: (string | null) | Category;
   image: string | Media;
   updatedAt: string;
@@ -251,16 +247,6 @@ export interface Product {
  * via the `definition` "tags".
  */
 export interface Tag {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "size".
- */
-export interface Size {
   id: string;
   name: string;
   updatedAt: string;
@@ -292,10 +278,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: string | Tag;
-      } | null)
-    | ({
-        relationTo: 'size';
-        value: string | Size;
       } | null)
     | ({
         relationTo: 'color';
@@ -419,8 +401,6 @@ export interface ProductsSelect<T extends boolean = true> {
   description?: T;
   price?: T;
   tags?: T;
-  size?: T;
-  color?: T;
   category?: T;
   image?: T;
   updatedAt?: T;
@@ -431,15 +411,6 @@ export interface ProductsSelect<T extends boolean = true> {
  * via the `definition` "tags_select".
  */
 export interface TagsSelect<T extends boolean = true> {
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "size_select".
- */
-export interface SizeSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;

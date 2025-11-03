@@ -14,10 +14,9 @@ export const NavBar = ({ slug }: Props) => {
 
   return (
     <nav
-      className="h-20 border-b font-medium"
+      className="h-20 border-b font-medium bg-white"
       style={{
-        backgroundColor: data?.color?.name || "white",
-        borderColor: data?.color?.name === "black" ? "white" : "black",
+        borderColor: data?.color?.name || "black",
       }}
     >
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between gap-4 items-center h-full px-4 lg:px-12">
