@@ -6,11 +6,28 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantUrl } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { LinkIcon, StarIcon } from "lucide-react";
+import { LinkIcon, ShoppingCart, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
+
+const CartButton = dynamic(
+  () => import("../ui/components/cartButton").then((mod) => mod.CartButton),
+  {
+    ssr: false,
+    loading: () => (
+      <Button
+        variant={"elevated"}
+        disabled
+        className="flex-1 h-12 bg-amber-400 text-black"
+      >
+        <ShoppingCart /> Add To Cart
+      </Button>
+    ),
+  }
+);
 
 interface Props {
   productId: string;
@@ -23,8 +40,8 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
     trpc.products.getOne.queryOptions({ id: productId })
   );
   const tenantColor = data.tenant.color?.name || "black";
-  const handleClick = () => {
-    const url = window.location.href; // رابط الصفحة الحالي للمنتج
+  const handleLinkClick = () => {
+    const url = window.location.href;
     navigator.clipboard
       .writeText(url)
       .then(() => {
@@ -34,7 +51,6 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
         toast.error("Failed to copy link.");
       });
   };
-
   return (
     <div className="px-4 lg:px-12 py-10">
       <div
@@ -128,16 +144,11 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                 style={{ borderColor: tenantColor }}
               >
                 <div className="flex flex-row items-center gap-2">
-                  <Button
-                    variant={"elevated"}
-                    className="flex-1 bg-amber-400 h-12"
-                  >
-                    Add to Cart
-                  </Button>
+                  <CartButton productId={data.id} tenantSlug={tenantSlug} />
                   <Button
                     className="size-12"
                     variant={"elevated"}
-                    onClick={handleClick}
+                    onClick={handleLinkClick}
                     disabled={false}
                   >
                     <LinkIcon />
