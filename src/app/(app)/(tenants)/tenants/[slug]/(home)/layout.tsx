@@ -25,7 +25,7 @@ const Layout = async ({ children, params }: LayoutProps) => {
         </Suspense>
       </HydrationBoundary>
       <div className="flex-1">
-        <div className="max-w-(--breakpoint-2xl) mx-auto">{children}</div>
+        <div className="max-w-(--breakpoint-3xl) mx-auto">{children}</div>
       </div>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<FooterSkeleton />}>

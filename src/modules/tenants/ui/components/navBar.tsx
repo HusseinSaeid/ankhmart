@@ -4,7 +4,25 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+import { cn } from "@/lib/utils";
 
+const CheckOutButton = dynamic(
+  () =>
+    import("@/modules/checkout/ui/components/checkOutButton").then(
+      (mod) => mod.CheckOutButton
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <Button disabled variant={"elevated"} className={cn("bg-white")}>
+        <ShoppingCart />
+      </Button>
+    ),
+  }
+);
 interface Props {
   slug: string;
 }
@@ -40,6 +58,11 @@ export const NavBar = ({ slug }: Props) => {
             {data.name}
           </p>
         </Link>
+        <CheckOutButton
+          tenantSlug={data.slug}
+          tenantColor={data.color?.name}
+          hideIfEmpty
+        />
       </div>
     </nav>
   );
@@ -47,7 +70,15 @@ export const NavBar = ({ slug }: Props) => {
 export const NavBarSkeleton = () => {
   return (
     <nav className="h-20 border-b font-medium bg-white">
-      <div className="max-w-(--breakpoint-xl) mx-auto flex  gap-4 items-center h-full px-4 lg:px-12"></div>
+      <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between gap-4 items-center h-full px-4 lg:px-12">
+        <div className="flex items-center gap-2">
+          <div className="rounded-md bg-gray-200 size-[40px]" />
+          <div className="h-5 w-24 bg-gray-200 rounded-md" />
+        </div>
+        <Button disabled variant={"elevated"} className={cn("bg-white")}>
+          <ShoppingCart />
+        </Button>
+      </div>
     </nav>
   );
 };
