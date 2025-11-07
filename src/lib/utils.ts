@@ -10,7 +10,7 @@ export function generateTenantUrl(tenantSlug: string) {
 export function formatCurrency(value: number | string | undefined | null) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "EGP",
+    currency: "USD",
     maximumFractionDigits: 0,
   }).format(Number(value));
 }

@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCart } from "../hooks/useCart";
 import { useEffect } from "react";
 import CheckOutItem from "../ui/components/checkOutItem";
@@ -10,28 +10,60 @@ import { generateTenantUrl } from "@/lib/utils";
 import { CheckOutSideBar } from "../ui/components/checkOutSideBar";
 import { TbLoader2 } from "react-icons/tb";
 import { TbShoppingCartOff } from "react-icons/tb";
+import { useCheckOutStates } from "../hooks/useCheckOutStates";
+import { useRouter } from "next/navigation";
 
 interface CheckoutPageViewProps {
   tenantSlug: string;
 }
 
 export const CheckoutPageView = ({ tenantSlug }: CheckoutPageViewProps) => {
-  const {
-    productIds,
-    clearCart: clearTenantCart,
-    removeProduct,
-  } = useCart(tenantSlug);
+  const router = useRouter();
+
+  const [states, setStates] = useCheckOutStates();
+
+  const { productIds, clearCart, removeProduct } = useCart(tenantSlug);
+
   const trpc = useTRPC();
+
   const { data, error, isLoading } = useQuery(
     trpc.checkout.getProduct.queryOptions({ ids: productIds })
   );
+
+  const purchase = useMutation(
+    trpc.checkout.purchase.mutationOptions({
+      onMutate: () => {
+        setStates({ cancel: false, success: false });
+      },
+      onSuccess: (data) => {
+        window.location.href = data.url;
+      },
+      onError: (error) => {
+        if (error.data?.code === "UNAUTHORIZED") {
+          router.push("/sign-in");
+          return;
+        }
+        toast.error(error.message);
+      },
+    })
+  );
+
+  useEffect(() => {
+    if (states.success) {
+      setStates({ success: false, cancel: false });
+      clearCart();
+      router.push("/shop");
+    }
+  }, [states.success, clearCart, router, setStates]);
+
   useEffect(() => {
     if (!error) return;
     if (error?.data?.code === "NOT_FOUND") {
-      clearTenantCart();
+      clearCart();
       toast.warning("Some products were not found, cart has been cleared.");
     }
-  }, [error, clearTenantCart, tenantSlug]);
+  }, [error, clearCart]);
+
   if (isLoading) {
     return (
       <div className="lg:p-16 pt-4 px-4 lg:px-12">
@@ -79,9 +111,9 @@ export const CheckoutPageView = ({ tenantSlug }: CheckoutPageViewProps) => {
         <div className="lg:col-span-3">
           <CheckOutSideBar
             total={data?.totalPrices}
-            onCheckOut={() => {}}
-            isCanceled={false}
-            isPanding={false}
+            onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
+            isCanceled={states.cancel}
+            isPending={purchase.isPending}
             totalItems={data?.totalItems}
           />
         </div>

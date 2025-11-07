@@ -34,5 +34,22 @@ export const Tenants: CollectionConfig = {
       type: "upload",
       relationTo: "media",
     },
+    {
+      name: "stripeAccountId",
+      type: "text",
+      required: true,
+      admin: {
+        description: "This is the Stripe ID for the tenant",
+        readOnly: true,
+      },
+    },
+    {
+      name: "stripeDetailsSubmitted",
+      type: "checkbox",
+      admin: {
+        readOnly: true,
+        description: "Indicates whether the Stripe details have been submitted",
+      },
+    },
   ],
 };
