@@ -63,20 +63,18 @@ export const ProductCard = ({
         href={`/tenants/${sellerUserName}/products/${id}`}
         className="flex flex-col flex-1"
       >
-        {" "}
         <div className="relative aspect-square">
           <Image
             alt={name}
             fill
             src={imageUrl || "/images/placeholder.jpg"}
             className="object-cover"
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="p-4 border-y flex flex-col gap-3 flex-1">
-          {" "}
           <h2 className="text-lg font-medium line-clamp-4 capitalize">
             {name}
-          </h2>{" "}
+          </h2>
           <div
             onClick={handleUserClick}
             className="flex items-center gap-2 capitalize cursor-pointer"
@@ -89,21 +87,18 @@ export const ProductCard = ({
                 height={32}
                 className="rounded-md border shrink-0 w-8 h-8"
               />
-            )}{" "}
-            <p className="text-sm underline font-medium">
-              {sellerUserName}
-            </p>{" "}
+            )}
+            <p className="text-sm underline font-medium">{sellerUserName}</p>
           </div>
           {reviewCount > 0 && (
             <div className="flex items-center gap-1">
-              {" "}
               <Star className="w-3.5 h-3.5 fill-amber-400" />{" "}
               <p className="text-sm font-medium">
                 {reviewRating} ({reviewCount}){" "}
-              </p>{" "}
+              </p>
             </div>
-          )}{" "}
-        </div>{" "}
+          )}
+        </div>
       </Link>
 
       {/* Price & Cart Button (Outside Link) */}
