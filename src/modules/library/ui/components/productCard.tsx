@@ -1,31 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { formatCurrency } from "@/lib/utils";
-import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
-
-const CartButton = dynamic(
-  () =>
-    import("@/modules/products/ui/components/cartButton").then(
-      (mod) => mod.CartButton
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <Button
-        variant="elevated"
-        disabled
-        className="h-12 bg-amber-400 text-black"
-      >
-        {" "}
-        <ShoppingCart /> Add To Cart{" "}
-      </Button>
-    ),
-  }
-);
 
 interface ProductCardProps {
   id: string;
@@ -35,8 +11,6 @@ interface ProductCardProps {
   sellerImageUrl?: string | null;
   reviewRating: number;
   reviewCount: number;
-  price: number;
-  isPurchased: boolean;
 }
 
 export const ProductCard = ({
@@ -47,24 +21,11 @@ export const ProductCard = ({
   sellerImageUrl,
   reviewRating,
   reviewCount,
-  price,
-  isPurchased,
 }: ProductCardProps) => {
-  const router = useRouter();
-
-  const handleUserClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    router.push(`/tenants/${sellerUserName}`);
-  };
-
   return (
     <div className="border rounded-md bg-white overflow-hidden flex flex-col h-full hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow">
       {/* Product Info */}
-      <Link
-        href={`/tenants/${sellerUserName}/products/${id}`}
-        className="flex flex-col flex-1"
-      >
+      <Link href={`/library/${id}`} className="flex flex-col flex-1">
         <div className="relative aspect-square">
           <Image
             alt={name}
@@ -77,10 +38,7 @@ export const ProductCard = ({
           <h2 className="text-lg font-medium line-clamp-4 capitalize">
             {name}
           </h2>
-          <div
-            onClick={handleUserClick}
-            className="flex items-center gap-2 capitalize cursor-pointer"
-          >
+          <div className="flex items-center gap-2 capitalize cursor-pointer">
             {sellerImageUrl && (
               <Image
                 alt={sellerUserName}
@@ -102,21 +60,6 @@ export const ProductCard = ({
           )}
         </div>
       </Link>
-
-      {/* Price & Cart Button (Outside Link) */}
-      <div className="p-4 flex items-center justify-between">
-        <div className="relative px-2 py-1 border bg-amber-400 w-fit">
-          <p className="text-sm font-medium">{formatCurrency(price)}</p>
-        </div>
-        <div>
-          <CartButton
-            productId={id}
-            tenantSlug={sellerUserName}
-            isPurchased={isPurchased}
-            className="h-12"
-          />
-        </div>
-      </div>
     </div>
   );
 };

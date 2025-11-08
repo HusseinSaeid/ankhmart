@@ -144,7 +144,11 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                 style={{ borderColor: tenantColor }}
               >
                 <div className="flex flex-row items-center gap-2">
-                  <CartButton productId={data.id} tenantSlug={tenantSlug} />
+                  <CartButton
+                    productId={data.id}
+                    tenantSlug={tenantSlug}
+                    isPurchased={data.isPurchased}
+                  />
                   <Button
                     className="size-12"
                     variant={"elevated"}

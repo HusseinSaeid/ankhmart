@@ -2,23 +2,17 @@
 
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { UseProductFilters } from "../../hooks/UseProductFilters";
 import { ProductCard, ProductCardSkeleton } from "./productCard";
 import { Button } from "@/components/ui/button";
 import { TbInboxOff } from "react-icons/tb";
 
-interface Props {
-  category?: string;
-  tenantSlug?: string;
-}
-export const ProductsList = ({ category, tenantSlug }: Props) => {
-  const [filters] = UseProductFilters();
+export const ProductsList = () => {
   const trpc = useTRPC();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery(
-      trpc.products.getMany.infiniteQueryOptions(
-        { ...filters, category, tenantSlug, limit: 20 },
+      trpc.library.getMany.infiniteQueryOptions(
+        { limit: 20 },
         {
           getNextPageParam: (lastPage) => {
             return lastPage.docs.length > 0 ? lastPage.nextPage : undefined;
@@ -50,12 +44,10 @@ export const ProductsList = ({ category, tenantSlug }: Props) => {
                 id={product.id}
                 name={product.name}
                 imageUrl={product.image?.url}
-                price={product.price}
                 sellerUserName={product.tenant?.name}
-                sellerImageUrl={product.tenant.image?.url}
+                sellerImageUrl={product.tenant?.image?.url}
                 reviewRating={3}
                 reviewCount={5}
-                isPurchased={product.isPurchased}
               />
             );
           })}
