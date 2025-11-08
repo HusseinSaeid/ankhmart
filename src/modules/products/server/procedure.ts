@@ -3,18 +3,39 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 import z from "zod";
 import { sortValues } from "../searchParams";
+import { headers as getHeaders } from "next/headers";
 
 export const productsRouter = createTRPCRouter({
   getOne: baseProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
+      const headers = await getHeaders();
+      const session = await ctx.db.auth({ headers });
       const product = await ctx.db.findByID({
         collection: "products",
         id: input.id,
         depth: 3,
       });
+      let isPurchased = false;
+      if (session.user) {
+        const orderData = await ctx.db.find({
+          collection: "orders",
+          pagination: false,
+          limit: 1,
+          where: {
+            and: [
+              { product: { equals: input.id } },
+              {
+                user: { equals: session.user.id },
+              },
+            ],
+          },
+        });
+        isPurchased = !!orderData.docs[0];
+      }
       return {
         ...product,
+        isPurchased,
         image: product.image as Media,
         tenant: {
           ...(typeof product.tenant === "object" && product.tenant !== null
@@ -47,7 +68,25 @@ export const productsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      const headers = await getHeaders();
+      const session = await ctx.db.auth({ headers });
+      let isPurchasedIds: string[] = [];
+      if (session.user) {
+        const ordersData = await ctx.db.find({
+          collection: "orders",
+          where: {
+            user: {
+              equals: session.user.id,
+            },
+          },
+          limit: 100,
+          pagination: false,
+          depth: 0,
+        });
+        isPurchasedIds = ordersData.docs.map((o) => o.product as string);
+      }
       const where: Where = {};
+
       let sort: Sort = "-name";
       switch (input.sort) {
         case "newest":
@@ -130,6 +169,7 @@ export const productsRouter = createTRPCRouter({
         ...data,
         docs: data.docs.map((doc) => ({
           ...doc,
+          isPurchased: isPurchasedIds.includes(doc.id),
           image: doc.image as Media | null,
           tenant: doc.tenant as Tenant & {
             image: Media | null;
