@@ -33,5 +33,6 @@ export const Products: CollectionConfig = {
       hasMany: false,
     },
     { name: "image", type: "upload", relationTo: "media", required: true },
+    { name: "download", type: "upload", relationTo: "download" },
   ],
 };

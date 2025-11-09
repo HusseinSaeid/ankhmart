@@ -75,6 +75,7 @@ export interface Config {
     color: Color;
     tenants: Tenant;
     orders: Order;
+    download: Download;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +94,7 @@ export interface Config {
     color: ColorSelect<false> | ColorSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    download: DownloadSelect<false> | DownloadSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -249,6 +251,7 @@ export interface Product {
   tags?: (string | Tag)[] | null;
   category?: (string | null) | Category;
   image: string | Media;
+  download?: (string | null) | Download;
   updatedAt: string;
   createdAt: string;
 }
@@ -261,6 +264,25 @@ export interface Tag {
   name: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "download".
+ */
+export interface Download {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -313,6 +335,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'orders';
         value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'download';
+        value: string | Download;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -430,6 +456,7 @@ export interface ProductsSelect<T extends boolean = true> {
   tags?: T;
   category?: T;
   image?: T;
+  download?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -476,6 +503,24 @@ export interface OrdersSelect<T extends boolean = true> {
   stripeCheckoutSessionId?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "download_select".
+ */
+export interface DownloadSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
