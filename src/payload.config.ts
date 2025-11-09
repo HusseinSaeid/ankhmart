@@ -17,6 +17,7 @@ import { Tags } from "./collections/Tags";
 import { Color } from "./collections/Color";
 import { Tenants } from "./collections/Tenants";
 import { Orders } from "./collections/Orders";
+import { Download } from "./collections/Download";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -37,6 +38,7 @@ export default buildConfig({
     Color,
     Tenants,
     Orders,
+    Download,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
