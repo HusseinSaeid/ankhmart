@@ -8,14 +8,14 @@ interface Props {
 }
 const Page = async ({ params }: Props) => {
   const { productId } = await params;
-  const qurryClint = getQueryClient();
-  void qurryClint.prefetchQuery(
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(
     trpc.library.getOne.queryOptions({
       productId,
     })
   );
   return (
-    <HydrationBoundary state={dehydrate(qurryClint)}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <ProductView productId={productId} />
     </HydrationBoundary>
   );
