@@ -18,6 +18,7 @@ import { Color } from "./collections/Color";
 import { Tenants } from "./collections/Tenants";
 import { Orders } from "./collections/Orders";
 import { Download } from "./collections/Download";
+import { isSuperAdmin } from "./lib/access";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -57,8 +58,7 @@ export default buildConfig({
       tenantsArrayField: {
         includeDefaultField: false,
       },
-      userHasAccessToAllTenants: (user) =>
-        Boolean(user?.roles?.includes("super-admin")),
+      userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
   ],
 });

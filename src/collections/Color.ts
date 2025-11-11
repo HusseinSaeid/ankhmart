@@ -1,8 +1,13 @@
+import { isSuperAdmin } from "@/lib/access";
 import type { CollectionConfig } from "payload";
 
 export const Color: CollectionConfig = {
   slug: "color",
-  admin: { useAsTitle: "name" },
+  access: {
+    create: ({ req }) => isSuperAdmin(req.user),
+    delete: ({ req }) => isSuperAdmin(req.user),
+  },
+  admin: { useAsTitle: "name", hidden: ({ user }) => !isSuperAdmin(user) },
   fields: [
     {
       name: "name",
