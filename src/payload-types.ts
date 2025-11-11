@@ -252,6 +252,10 @@ export interface Product {
   category?: (string | null) | Category;
   image: string | Media;
   download?: (string | null) | Download;
+  /**
+   * Proteced Content only Visable after Purchase
+   */
+  content?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -457,6 +461,7 @@ export interface ProductsSelect<T extends boolean = true> {
   category?: T;
   image?: T;
   download?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
 }
